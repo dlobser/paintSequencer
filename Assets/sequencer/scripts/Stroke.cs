@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum StrokeState { START, PLAY, FINISH };
 public class Stroke : MonoBehaviour {
 
 	public List<GameObject> subTrails;
@@ -10,7 +11,7 @@ public class Stroke : MonoBehaviour {
 	protected beatGlobals bGlobals;
 
 	public GameObject root;
-	public AudioSource aud;
+	public AudioSource _audio;
 	public LineRenderer lRend;
 	public float trailLength = 1;
 	public float trailWidth = .1f;
@@ -24,63 +25,159 @@ public class Stroke : MonoBehaviour {
 	public int trailHead = 0;
 
 	protected float timer = 0;
-	protected int playbackHead = 0;
-	public bool isPlaying = false;
+	protected int currentPlaybackIndex = 0;
+
 
 	public bool drawing;
 	public float age = 0;
 
 	public bool readyToDie = false;
 
+    public bool isBeingDrawn = false;
+    public bool isPlaying = false;
 
-	public virtual void Awake(){
+    public StrokeState state;
+    public AudioClip audioClip;
+
+
+    public virtual void Awake(){
 		animators = new List<animate> ();
 		registerAnimators (this.gameObject);
 		bGlobals = beatGlobals.Instance;
 		lRend = transform.GetComponent<LineRenderer> ();
 		Trail = new Vector3[trailAlloc];
-	}
+        trail = new List<Vector3>();
+        root = transform.gameObject;
+        _audio = root.AddComponent<AudioSource>();
+    }
 
-	public virtual void Draw(Vector3 vec){
-		if (!isPlaying) {
-			root.transform.localPosition = vec;
-			timer += Time.deltaTime;
-			if (!vec.Equals (Vector3.zero))
-				strokeUtils.addToTrail (Trail, trailHead, vec);
-			trailToLine (0,trailHead);
-			if (timer > trailLength)
-				strokeUtils.shiftArray (Trail, trailHead);//	trail.RemoveAt (0);
-			else {
-				trailHead++;
-				playbackHead++;
-			}
-		}
-	}
 
-	public virtual void playBack(){
-		age += Time.deltaTime;
+    void Update() {
+        switch(this.state) {
+            case StrokeState.START:
+                HandlePlayStart();
+                break;
+            case StrokeState.PLAY:
+                HandlePlay();
+                break;
+            case StrokeState.FINISH:
+                HandlePlayFinish();
+                break;
+        }
+    }
+
+    //why was this protected?
+    public void SwitchState(StrokeState newState) {
+        this.state = newState;
+        switch(this.state) {
+            case StrokeState.START:
+                this.OnPlayStart();
+                break;
+            case StrokeState.PLAY:
+                this.OnPlay();
+                break;
+            case StrokeState.FINISH:
+                this.OnPlayFinish();
+                break;
+        }
+    }
+
+
+    protected virtual void OnPlayStart() {
+        //previously was in PlayButton() method
+        if (!isPlaying && age < beatGlobals.Instance.strokeAge) {
+            this.isPlaying = true;
+            trailWidth = bGlobals.trailWidth;
+            lRend.SetWidth(0, trailWidth);
+            this.playAudio();
+            SwitchState(StrokeState.PLAY);
+        }
+    }
+
+    protected virtual void OnPlay() {
+
+    }
+
+    protected virtual void OnPlayFinish() {
+        if(this.isPlaying) this.isPlaying = false;
+    }
+
+    protected virtual void HandlePlayStart() {
+
+    }
+
+    protected virtual void HandlePlay() {
+
+    }
+
+    protected virtual void HandlePlayFinish() {
+
+    }
+
+
+    public virtual void Reset() {
+        timer = 0;
+        age = 0;
+        currentPlaybackIndex = 0;
+        root.transform.localPosition = Trail[0];
+        trailToLine(0, 0);
+    }
+
+    /*
+
+        Below are called from Bulb.cs
+
+    */
+
+
+
+    public virtual void Draw(Vector3 vec) {
+        if (!this.isPlaying) {
+            this.isBeingDrawn = true;
+            root.transform.localPosition = vec;
+            timer += Time.deltaTime;
+            if (!vec.Equals(Vector3.zero))
+                strokeUtils.addToTrail(Trail, trailHead, vec);
+            trailToLine(0, trailHead);
+            if (timer > trailLength)
+                strokeUtils.shiftArray(Trail, trailHead);//	trail.RemoveAt (0);
+            else {
+                trailHead++;
+                currentPlaybackIndex++;
+            }
+        }
+    }
+
+    public virtual void playButton() {
+        SwitchState(StrokeState.START);
+    }
+
+    public virtual void playBack(){
+		this.age += Time.deltaTime;
 		if (isPlaying && trailHead > 0) {
+            //HANDLEPLAY
 			traceLine ();
-			if (playbackHead > trailHead - 1) {
+			if (currentPlaybackIndex > trailHead - 1) {
 				isPlaying = false;
-				playbackHead = 0;
+				currentPlaybackIndex = 0;
 			}
-		} else if (!isPlaying && playbackHead < trailHead - 1) {
-			traceLine ();
+		//} else if (!isPlaying && currentPlaybackIndex < trailHead - 1) {
+//			traceLine ();
 		} else if (!isPlaying) {
-			destruct ();
+            //HANDLEPLAYFINISH
+			destruct();
 		} else if (readyToDie) {
 			readyToDie = !readyToDie;
 			timer = 0;
 			age = 0;
-			playbackHead = 0;
-			root.transform.localPosition = Trail [playbackHead];
+			currentPlaybackIndex = 0;
+			root.transform.localPosition = Trail [currentPlaybackIndex];
 			trailToLine (0, 0);
-			//float sc = 0;
-			//root.transform.GetChild (0).transform.localScale = new Vector3 (sc, sc, sc);
 		}
 	}
-		
+
+
+    //FIND ALL "ANIMATE" FUNCTIONS IN SELF AND CHILDREN
 	public void registerAnimators(GameObject g){
 
 		animate[] playerScripts = g.GetComponents<animate>();
@@ -94,16 +191,11 @@ public class Stroke : MonoBehaviour {
 		}
 	}
 
+    //START ANIMATE FUNCTIONS
 	public void animateAnimators(float t){
 		for (int i = 0; i < animators.Count; i++) {
 			animators [i].Play (t);
 		}
-	}
-
-	public void Create(AudioClip c){
-		trail = new List<Vector3> ();
-		root = transform.gameObject;
-		aud = root.AddComponent<AudioSource> ();
 	}
 
 	public void trailToLine(int start, int end){
@@ -113,29 +205,24 @@ public class Stroke : MonoBehaviour {
 		lRend.SetWidth (0, trailWidth);
 	}
 
-	public virtual void playButton(){
-		if (!isPlaying && age < beatGlobals.Instance.strokeAge) {
-			isPlaying = true;
-			trailWidth = bGlobals.trailWidth;
-			lRend.SetWidth (0, trailWidth);
-			playStart();
-		}
-	}
-		
-	public virtual void traceLine(){
-		root.transform.localPosition = Trail [playbackHead];
-		trailToLine (0, playbackHead);
-		playbackHead++;
-		animateAnimators ((float)playbackHead / (float)trailHead);
-	}
+
+    public void Play() { 
+        if (isPlaying)
+            return;
+        this.SwitchState(StrokeState.START);
+    }
+
+    public virtual void traceLine() {
+        root.transform.localPosition = Trail[currentPlaybackIndex];
+        trailToLine(0, currentPlaybackIndex);
+        currentPlaybackIndex++;
+        animateAnimators((float)currentPlaybackIndex / (float)trailHead);
+    }
 
 
-	//runs until destroyed
-	public virtual void destruct(){
-
+    //runs until destroyed
+    public virtual void destruct(){
 		playEnd ();
-
-		
 
 		if(lRend)
 			lRend.SetWidth (0, trailWidth);
@@ -148,9 +235,6 @@ public class Stroke : MonoBehaviour {
 		}
 	}
 
-	public void setPitch(float p){
-		aud.pitch = p;
-	}
 
 	public void playEnd(){
 		for (int i = 0; i < animators.Count; i++) {
@@ -158,8 +242,19 @@ public class Stroke : MonoBehaviour {
 		}
 	}
 
-	public void playStart(){
-		aud.Play ();
-	}
+    public void setAudioClip(int clipIndex) {
+        this.audioClip = this.bGlobals.clips[clipIndex];
+    }
+
+    public void setAudioPitch(float pitch) {
+        this._audio.pitch = pitch;
+    }
+
+    public void playAudio() {
+        this._audio.Play();
+    }
+
+
+
 
 }

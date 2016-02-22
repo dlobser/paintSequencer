@@ -49,7 +49,7 @@ public class Bulb : MonoBehaviour {
 	public void clearStrokes(){
 		foreach (Stroke s in strokes) {
 			if (s.GetComponent<Stroke> ().subTrails.Count > 0) {
-				foreach(GameObject st in s.GetComponent<Stroke> ().subTrails){
+				foreach(GameObject st in s.GetComponent<Stroke>().subTrails){
 					Destroy (st);
 				}
 			}
@@ -60,21 +60,25 @@ public class Bulb : MonoBehaviour {
 
 	public void drawStroke(Vector3 vec){
 		if (activeStroke == null) {
-			activeStroke = Instantiate (bGlobals.strokes[bGlobals.which]);
+            //the old way:
+            //activeStroke = Instantiate (bGlobals.strokes[bGlobals.which]);
+            activeStroke = Instantiate(bGlobals.strokes[0]);
 			Stroke s = activeStroke.GetComponent<Stroke>();
-			s.setPitch (pitch);
-			s.playStart();
+            //s.setPitch (pitch);
+            //s.playStart();
+            s.setAudioPitch(pitch);
+            s.playAudio();
 			s.trailLength += 1-pitch;
 			strokes.Add (s);
 			pitch *= .9f;
 		} else {
-			activeStroke.GetComponent<Stroke>(). Draw (vec);
+			activeStroke.GetComponent<Stroke>().Draw (vec);
 		}
 	}
 
 	public void finishStroke(){
 		if (activeStroke != null) {
-			activeStroke.GetComponent<Stroke> ().isPlaying = false;
+            activeStroke.GetComponent<Stroke>().SwitchState(StrokeState.FINISH);
 			activeStroke = null;
 		}
 	}

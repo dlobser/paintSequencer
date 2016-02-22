@@ -7,18 +7,19 @@ public class longStroke2 : Stroke {
 	public int subTrailType = 0;
 
 	public override void Awake(){
+        base.Awake();
 		animators = new List<animate> ();
 		registerAnimators (this.gameObject);
 		bGlobals = beatGlobals.Instance;
 		lRend = transform.GetComponent<LineRenderer> ();
 		Trail = new Vector3[trailAlloc];
-		aud.loop = true;
+		_audio.loop = true;
 		timer = 1e6f;
 	}
 
 	public override void Draw(Vector3 vec){
 		
-		if (!isPlaying) {
+		if (!this.isPlaying) {
 
 			timer += Time.deltaTime;
 
@@ -29,8 +30,8 @@ public class longStroke2 : Stroke {
 			makeSubTrail ();
 
 			foreach (GameObject t in subTrails) {
-				Stroke s = t.GetComponent<Stroke> ();
-				strokeUtils.addToTrail (s.Trail, ++s.trailHead, Trail [trailHead]);
+				Stroke s = t.GetComponent<Stroke>();
+				strokeUtils.addToTrail(s.Trail, ++s.trailHead, Trail [trailHead]);
 			}
 
 			trailHead++;
@@ -40,14 +41,12 @@ public class longStroke2 : Stroke {
 	}
 
 	public void makeSubTrail(){
-
 		if (timer > trailLength) {
 			timer = 0;
 			subTrails.Add (Instantiate (bGlobals.subStrokes[subTrailType]));
             subTrails[subTrails.Count - 1].GetComponent<Stroke>().Trail =  strokeUtils.noiseVecArray((Vector3[])  Trail.Clone(), trailHead, .9f);
 			subTrails [subTrails.Count - 1].GetComponent<Stroke> ().trailHead = trailHead;
 			subTrails [subTrails.Count - 1].GetComponent<Stroke> ().playButton ();
-
 		}
 		for(int i = 0 ; i < subTrails.Count ; i++){
 			subTrails[i].GetComponent<Stroke> ().playBack ();
@@ -75,7 +74,7 @@ public class longStroke2 : Stroke {
 			isPlaying = true;
 			trailWidth = bGlobals.trailWidth;
 			lRend.SetWidth (0, trailWidth);
-			playStart ();
+			this.playAudio();
 			timer = 1e6f;
 		}
 
@@ -108,14 +107,14 @@ public class longStroke2 : Stroke {
 
 		if (isPlaying && trailHead > 0) {
 			
-			root.transform.localPosition = Trail [playbackHead];
-			playbackHead++;
+			root.transform.localPosition = Trail [currentPlaybackIndex];
+			currentPlaybackIndex++;
 			timer += Time.deltaTime;
 			makeSubTrail ();
 
-			if (playbackHead > trailHead - 1) {
+			if (currentPlaybackIndex > trailHead - 1) {
 				isPlaying = false;
-				playbackHead = 0;
+				currentPlaybackIndex = 0;
 				playEnd ();
 			}
 		} 
@@ -135,8 +134,8 @@ public class longStroke2 : Stroke {
 			readyToDie = !readyToDie;
 			timer = 1e6f;
 			age = 0;
-			playbackHead = 0;
-			root.transform.localPosition = Trail [playbackHead];
+			currentPlaybackIndex = 0;
+			root.transform.localPosition = Trail [currentPlaybackIndex];
 			trailToLine (0, 0);
 //			float sc =0;
 //			root.transform.GetChild (0).transform.localScale = new Vector3 (sc, sc, sc);

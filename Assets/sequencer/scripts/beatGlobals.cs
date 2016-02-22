@@ -16,5 +16,6 @@ public class beatGlobals : Singleton<beatGlobals> {
 	public GameObject bulbDisplay;
 	public float minBulbScale;
 	public float maxBulbScale;
+    public GameObject genericStroke;
 
 }

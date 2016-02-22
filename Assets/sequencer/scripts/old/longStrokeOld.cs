@@ -9,7 +9,7 @@ public class longStrokeOld : Stroke {
 		bGlobals = beatGlobals.Instance;
 		lRend = transform.GetComponent<LineRenderer> ();
 		Trail = new Vector3[trailAlloc];
-		aud.loop = true;
+		_audio.loop = true;
 	}
 
 	public override void Draw(Vector3 vec){
@@ -92,9 +92,9 @@ public class longStrokeOld : Stroke {
 			timer += Time.deltaTime;
 			makeSubTrail ();
 
-			if (playbackHead > trailHead - 1) {
+			if (currentPlaybackIndex > trailHead - 1) {
 				isPlaying = false;
-				playbackHead = 0;
+				currentPlaybackIndex = 0;
 				//				root.transform.localPosition = trail [0];
 				playEnd();
 			}
@@ -122,8 +122,8 @@ public class longStrokeOld : Stroke {
 			readyToDie = !readyToDie;
 			timer = 0;
 			age = 0;
-			playbackHead = 0;
-			root.transform.localPosition = Trail [playbackHead];
+			currentPlaybackIndex = 0;
+			root.transform.localPosition = Trail [currentPlaybackIndex];
 			trailToLine (0, 0);
 			float sc =0;
 			root.transform.GetChild (0).transform.localScale = new Vector3 (sc, sc, sc);

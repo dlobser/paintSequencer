@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paintSequencer.CSharp.Plugins", "paintSequencer.CSharp.Plugins.csproj", "{A3A7C578-A515-9B71-DF20-3D04A1889DA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paintSequencer.CSharp", "paintSequencer.CSharp.csproj", "{13962514-CF22-3BF0-1714-4755DBBB738A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paintSequencer.CSharp.Editor", "paintSequencer.CSharp.Editor.csproj", "{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3A7C578-A515-9B71-DF20-3D04A1889DA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3A7C578-A515-9B71-DF20-3D04A1889DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3A7C578-A515-9B71-DF20-3D04A1889DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3A7C578-A515-9B71-DF20-3D04A1889DA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13962514-CF22-3BF0-1714-4755DBBB738A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13962514-CF22-3BF0-1714-4755DBBB738A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13962514-CF22-3BF0-1714-4755DBBB738A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13962514-CF22-3BF0-1714-4755DBBB738A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

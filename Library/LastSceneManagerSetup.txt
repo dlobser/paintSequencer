@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/saved.unity
+- path: Assets/main-sebastian.unity
   isLoaded: 1
   isActive: 1
