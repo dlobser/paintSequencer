@@ -1,11 +1,11 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paintSequencer.CSharp.Plugins", "paintSequencer.CSharp.Plugins.csproj", "{A3A7C578-A515-9B71-DF20-3D04A1889DA1}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{B868BECB-C43E-DC7D-E782-01CF49F9AECA}") = "paintSequencer", "Assembly-CSharp-firstpass.csproj", "{36DF29E2-0AEB-C360-8ADB-E601A8649F90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paintSequencer.CSharp", "paintSequencer.CSharp.csproj", "{13962514-CF22-3BF0-1714-4755DBBB738A}"
+Project("{B868BECB-C43E-DC7D-E782-01CF49F9AECA}") = "paintSequencer", "Assembly-CSharp.csproj", "{C943B7F8-8405-1447-4172-DEFBD5A2CE2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paintSequencer.CSharp.Editor", "paintSequencer.CSharp.Editor.csproj", "{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}"
+Project("{B868BECB-C43E-DC7D-E782-01CF49F9AECA}") = "paintSequencer", "Assembly-CSharp-Editor.csproj", "{22901FFF-7E16-C677-A44A-D829E83ACD48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,20 +13,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A3A7C578-A515-9B71-DF20-3D04A1889DA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3A7C578-A515-9B71-DF20-3D04A1889DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3A7C578-A515-9B71-DF20-3D04A1889DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3A7C578-A515-9B71-DF20-3D04A1889DA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{13962514-CF22-3BF0-1714-4755DBBB738A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13962514-CF22-3BF0-1714-4755DBBB738A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13962514-CF22-3BF0-1714-4755DBBB738A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13962514-CF22-3BF0-1714-4755DBBB738A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD7476EC-EB77-5FCE-EE8B-90C4FFD21F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DF29E2-0AEB-C360-8ADB-E601A8649F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DF29E2-0AEB-C360-8ADB-E601A8649F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DF29E2-0AEB-C360-8ADB-E601A8649F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DF29E2-0AEB-C360-8ADB-E601A8649F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C943B7F8-8405-1447-4172-DEFBD5A2CE2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C943B7F8-8405-1447-4172-DEFBD5A2CE2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C943B7F8-8405-1447-4172-DEFBD5A2CE2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C943B7F8-8405-1447-4172-DEFBD5A2CE2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22901FFF-7E16-C677-A44A-D829E83ACD48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22901FFF-7E16-C677-A44A-D829E83ACD48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22901FFF-7E16-C677-A44A-D829E83ACD48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22901FFF-7E16-C677-A44A-D829E83ACD48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
