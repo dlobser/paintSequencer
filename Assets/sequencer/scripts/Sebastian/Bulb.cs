@@ -13,6 +13,7 @@ namespace HolojamEngine {
         ////////////////////////////////////////
         //public collections & vars
         ////////////////////////////////////////
+
         public float pitch = 1f;
         public Stroke strokePrefab;
 
@@ -61,7 +62,7 @@ namespace HolojamEngine {
                 activeStroke.SetAudioPitch(pitch);
                 strokes.Add(activeStroke);
                 pitch *= 0.9f;
-                activeStroke.transform.SetParent(this.transform);
+                // activeStroke.transform.SetParent(this.transform);
             } else {
                 activeStroke.Draw(v);
             }

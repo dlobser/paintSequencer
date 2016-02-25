@@ -11,8 +11,8 @@ namespace HolojamEngine {
         private Vector3 previousDrawVector = Vector3.zero;
 
         public override void Draw(Vector3 v) {
-            this.root.localPosition = v;
-            this.timer += Time.unscaledDeltaTime;
+            this.root.position = v;
+            this.timer += Time.deltaTime;
             if (Vector3.Distance(this.previousDrawVector, v) > this.drawThreshold) {
                 this.trail.Add(v);
 
@@ -25,7 +25,7 @@ namespace HolojamEngine {
 
         public override void FinishDraw() {
             this.hasBeenDrawn = true;
-            this.SwitchToState(StrokeState.IDLE);
+            this.SwitchToState(StrokeState.FINISH);
         }
 
         protected override void Reset() {
@@ -44,7 +44,7 @@ namespace HolojamEngine {
         }
 
         protected override void HandlePlay() {
-            this.root.localPosition = trail[currentPlaybackIndex];
+            this.root.position = trail[currentPlaybackIndex];
             this.PushTrailToLine(0, currentPlaybackIndex);
             this.currentPlaybackIndex++;
 
@@ -75,7 +75,7 @@ namespace HolojamEngine {
             this.Reset();
 
             if (this.isFlaggedForDeath) {
-                //DESTROY
+                Destroy(this.gameObject);
             }
 
         }

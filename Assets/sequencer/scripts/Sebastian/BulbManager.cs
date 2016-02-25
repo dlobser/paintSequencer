@@ -14,6 +14,7 @@ namespace HolojamEngine {
         //public collections & vars
         ////////////////////////////////////////
         public List<Bulb> bulbs = new List<Bulb>();
+        public List<Stroke> strokePrefabs;
 
         public Bulb bulbPrefab;
         public float radius = 5f;
@@ -25,6 +26,7 @@ namespace HolojamEngine {
         //protected/private collections & vars
         ////////////////////////////////////////
         private Bulb activeBulb;
+        private int currentStrokeIndex;
         private float timer = 0f;
         private int bulbCounter = 0;
         ////////////////////////////////////////
@@ -46,31 +48,43 @@ namespace HolojamEngine {
                 Mathf.Cos(((float)i / (float)amount) * Mathf.PI * 2) * radius);
                 bulbs.Add(nb);
             }
+
+            currentStrokeIndex = 0;
         }
 
         // Update is called once per frame
         void Update() {
-            if (Input.GetKeyDown(KeyCode.D)) {
-                Bulb b = this.FindClosestBulb(this.HitPoint());
-                if (b)
-                    b.ClearStrokes();
+            //SWITCH STROKE PREFAB
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                this.currentStrokeIndex = (currentStrokeIndex + 1 == strokePrefabs.Count ? 0 : currentStrokeIndex + 1);
             }
 
+            //START/DRAW STROKE
             if (Input.GetMouseButton(0)) {
                 Vector3 hit = this.HitPoint();
                 if (activeBulb == null) {
                     activeBulb = this.FindClosestBulb(hit);
+                    activeBulb.strokePrefab = strokePrefabs[currentStrokeIndex];
                     activeBulb.DrawStroke(hit);
                 } else {
                     activeBulb.DrawStroke(hit);
                 }
             }
 
+            //FINISH STROKE
             if (Input.GetMouseButtonUp(0)) {
                 if (activeBulb) {
                     activeBulb.FinishStroke();
                     activeBulb = null;
                 }
+            }
+
+
+            //DELETE
+            if (Input.GetMouseButtonDown(1) && !activeBulb)
+            {
+                this.FindClosestBulb(this.HitPoint()).ClearStrokes();
             }
 
 

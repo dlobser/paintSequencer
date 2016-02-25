@@ -13,7 +13,7 @@ namespace HolojamEngine {
         ////////////////////////////////////////
         //state machine enumerator
         ////////////////////////////////////////
-        protected enum StrokeState {IDLE, START, PLAY, FINISH };
+        public enum StrokeState {IDLE, START, PLAY, FINISH };
 
 
         ////////////////////////////////////////
@@ -80,7 +80,7 @@ namespace HolojamEngine {
             if (!this.hasBeenDrawn) {
                 return;
                 //TO-DO: CHANGE
-            }  else if (this.state.Equals(StrokeState.FINISH) || this.state.Equals(StrokeState.IDLE)) {
+            }  else if (this.state.Equals(StrokeState.IDLE)) {
                 this.Reset();
                 this.SwitchToState(StrokeState.START);
             } 
@@ -89,6 +89,15 @@ namespace HolojamEngine {
 
         public void FlagForDeath() {
             this.isFlaggedForDeath = true;
+        }
+
+        public StrokeState GetState() {
+            return this.state;
+        }
+
+        public void SetTrail(List<Vector3> newTrail)
+        {
+            this.trail = newTrail;
         }
 
         protected void PlayAudio() {
@@ -207,7 +216,21 @@ namespace HolojamEngine {
             return arr;
         }
 
-        
+        public static List<Vector3> AddNoiseToList(List<Vector3> vecs, float amt)
+        {
+            
+            for (int i = 1; i < vecs.Count - 1; i++)
+            {
+                Vector3 a = vecs[i - 1] * 10;
+                Vector3 b = vecs[i + 1] * 10;
+                Vector3 n = vecs[i] + new Vector3(
+                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(a.x, b.x + Time.time)),
+                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(a.y, b.y + Time.time)),
+                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(b.z, a.z + Time.time)));
+                vecs[i] = Vector3.Lerp(n, vecs[i], amt);
+            }
+            return vecs;
+        }
     }
 }
 
