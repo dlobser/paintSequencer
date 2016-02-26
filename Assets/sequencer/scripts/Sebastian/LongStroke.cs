@@ -13,18 +13,32 @@ namespace HolojamEngine {
         private List<Stroke> subStrokes = new List<Stroke>();
         private bool hasSubStrokesFinished = false;
 
+
         public override void Draw(Vector3 v) {
             this.root.position = v;
-            this.timer += Time.deltaTime;
+
 
             if (Vector3.Distance(this.previousDrawVector, v) > this.drawThreshold) {
-                this.trail.Add(v);
-                this.PushTrailToLine(0, trail.Count);
+
+                Stroke s = null;
 
                 if (this.timer > this.strokeLength) {
-                    this.MakeSubStroke();
+                    s = this.MakeSubStroke();
+                    timer = 0f;
                 }
+
+                StrokePoint point = new StrokePoint(v, timer, s);
+  
+                this.trail.Add(point);
+                
+                foreach (Stroke stroke in subStrokes) {
+                    stroke.AddStrokePoint(point);
+                }
+
+                this.PushTrailToLine(0, trail.Count);
             }
+
+            this.timer += Time.deltaTime;
         }
 
         public override void FinishDraw() {
@@ -34,7 +48,8 @@ namespace HolojamEngine {
 
         protected override void Reset() {
             base.Reset();
-            this.root.localPosition = trail[0];
+            this.root.localPosition = trail[0].vec;
+            this.timer = 0f;
             this.strokeWidth = GlobalValuesAndSettings.Instance.STROKE_START_WIDTH;
             this.PushTrailToLine(0, 0);
         }
@@ -42,15 +57,16 @@ namespace HolojamEngine {
         protected override void Start() {
             base.Start();
             this.audio.loop = true;
+            this.canRestartFromFinish = false;
         }
 
         protected override void OnIdle() {
-            this.Reset();
-
             if (this.isFlaggedForDeath) {
                 Destroy(this.gameObject);
                 //TO-DO: DESTROY SUBTRAILS
             }
+
+            this.Reset();
         }
 
         protected override void OnStart() {
@@ -81,9 +97,18 @@ namespace HolojamEngine {
         }
 
         protected override void HandlePlay() {
-            this.root.position = trail[currentPlaybackIndex];
-            this.PushTrailToLine(0, this.currentPlaybackIndex);
-            this.currentPlaybackIndex++;
+
+
+            if (trail[currentPlaybackIndex].time >= timer) {
+                this.root.position = trail[currentPlaybackIndex].vec;
+                this.PushTrailToLine(0, currentPlaybackIndex);
+
+                if (trail[currentPlaybackIndex].subStroke != null) {
+                    trail[currentPlaybackIndex].subStroke.Play();
+                }
+
+                this.currentPlaybackIndex++;
+            }
 
             if (this.currentPlaybackIndex == this.trail.Count) {
                 this.SwitchToState(StrokeState.FINISH);
@@ -111,10 +136,12 @@ namespace HolojamEngine {
             return true;
         }
 
-        private void MakeSubStroke() {
+        private Stroke MakeSubStroke() {
             Stroke stroke = GameObject.Instantiate<Stroke>(subStrokePrefab);
             stroke.SetTrail(StrokeUtils.AddNoiseToList(this.trail.GetRange(0, trail.Count), 0.9f));
             stroke.Play();
+            subStrokes.Add(stroke);
+            return stroke;
         }
     }
 }

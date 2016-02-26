@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 namespace HolojamEngine {
     public class ShortStroke : Stroke {
@@ -12,15 +13,18 @@ namespace HolojamEngine {
 
         public override void Draw(Vector3 v) {
             this.root.position = v;
-            this.timer += Time.deltaTime;
             if (Vector3.Distance(this.previousDrawVector, v) > this.drawThreshold) {
-                this.trail.Add(v);
+                this.trail.Add(new StrokePoint(v,timer));
 
-                if (this.trail.Count > this.trailMaxVertexCount)
+                if (this.trail.Count == this.trailMaxVertexCount) {
                     this.trail.RemoveAt(0);
+                }
+
 
                 this.PushTrailToLine(0,trail.Count);
             }
+
+            this.timer += Time.deltaTime;
         }
 
         public override void FinishDraw() {
@@ -30,7 +34,8 @@ namespace HolojamEngine {
 
         protected override void Reset() {
             base.Reset();
-            this.root.localPosition = trail[0];
+            this.root.localPosition = trail[0].vec;
+            this.timer = 0f;
             this.strokeWidth = GlobalValuesAndSettings.Instance.STROKE_START_WIDTH;
             this.PushTrailToLine(0, 0);
         }
@@ -44,9 +49,11 @@ namespace HolojamEngine {
         }
 
         protected override void HandlePlay() {
-            this.root.position = trail[currentPlaybackIndex];
-            this.PushTrailToLine(0, currentPlaybackIndex);
-            this.currentPlaybackIndex++;
+            if (trail[currentPlaybackIndex].time <= timer) {
+                this.root.position = trail[currentPlaybackIndex].vec;
+                this.PushTrailToLine(0, currentPlaybackIndex);
+                this.currentPlaybackIndex++;
+            }
 
             float v = currentPlaybackIndex / (float)(trail.Count-1);
             foreach (StrokeAnimation a in animations) {
@@ -55,6 +62,8 @@ namespace HolojamEngine {
 
             if (this.currentPlaybackIndex == trail.Count)
                 this.SwitchToState(StrokeState.FINISH);
+
+            timer += Time.deltaTime;
         }
 
         protected override void HandleFinish() {
@@ -72,12 +81,13 @@ namespace HolojamEngine {
 
 
         protected override void OnIdle() {
-            this.Reset();
 
             if (this.isFlaggedForDeath) {
                 Destroy(this.gameObject);
+                return;
             }
 
+            this.Reset();
         }
 
         protected override void OnStart() {

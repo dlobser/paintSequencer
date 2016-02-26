@@ -15,6 +15,21 @@ namespace HolojamEngine {
         ////////////////////////////////////////
         public enum StrokeState {IDLE, START, PLAY, FINISH };
 
+        ////////////////////////////////////////
+        //public structs
+        ////////////////////////////////////////
+        public struct StrokePoint {
+            public Vector3 vec;
+            public float time;
+            public Stroke subStroke;
+
+            public StrokePoint(Vector3 v, float time, Stroke s = null) {
+                this.vec = v;
+                this.time = time;
+                this.subStroke = s;
+            }
+        }
+
 
         ////////////////////////////////////////
         //public collections & vars
@@ -32,7 +47,7 @@ namespace HolojamEngine {
         //protected/private collections & vars
         ////////////////////////////////////////
         protected List<StrokeAnimation> animations  = new List<StrokeAnimation>();
-        protected List<Vector3> trail = new List<Vector3>();
+        protected List<StrokePoint> trail = new List<StrokePoint>();
 
         protected LineRenderer line;
         protected AudioSource audio;
@@ -45,7 +60,7 @@ namespace HolojamEngine {
         protected bool hasBeenDrawn = false;
         protected bool isPlaying = false;
         private StrokeState state = StrokeState.IDLE;
-
+        protected bool canRestartFromFinish = true;
 
         ////////////////////////////////////////
         //inherited functions
@@ -58,7 +73,7 @@ namespace HolojamEngine {
             this.audio = this.GetComponent<AudioSource>();
             this.root = this.transform;
             trailMaxVertexCount = GlobalValuesAndSettings.Instance.STROKE_MAX_VERTEX_COUNT;
-            trail = new List<Vector3>(trailMaxVertexCount);
+            trail = new List<StrokePoint>(trailMaxVertexCount);
         }
 
         // Use this for initialization
@@ -80,7 +95,8 @@ namespace HolojamEngine {
             if (!this.hasBeenDrawn) {
                 return;
                 //TO-DO: CHANGE
-            }  else if (this.state.Equals(StrokeState.IDLE)) {
+            }  else if (this.state.Equals(StrokeState.IDLE) || 
+                       (this.canRestartFromFinish && this.state.Equals(StrokeState.FINISH))) {
                 this.Reset();
                 this.SwitchToState(StrokeState.START);
             } 
@@ -95,9 +111,14 @@ namespace HolojamEngine {
             return this.state;
         }
 
-        public void SetTrail(List<Vector3> newTrail)
+        public void SetTrail(List<StrokePoint> newTrail)
         {
+            this.hasBeenDrawn = true;
             this.trail = newTrail;
+        }
+
+        public void AddStrokePoint(StrokePoint newPoint) {
+            this.trail.Add(newPoint);
         }
 
         protected void PlayAudio() {
@@ -196,6 +217,14 @@ namespace HolojamEngine {
             return arr;
         }
 
+        public static Vector3[] ListToArray(List<Stroke.StrokePoint> list, int start, int finish) {
+            Vector3[] arr = new Vector3[finish - start];
+            for (int i = start; i < finish; i++) {
+                arr[i] = list[i].vec;
+            }
+            return arr;
+        }
+
         public static Vector3[] AverageArray(Vector3[] arr) {
             for (int i = 1; i < arr.Length - 1; i++) {
                 arr[i] = (arr[i - 1] + arr[i + 1]) / 2f;
@@ -229,6 +258,21 @@ namespace HolojamEngine {
                     Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(b.z, a.z + Time.time)));
                 vecs[i] = Vector3.Lerp(n, vecs[i], amt);
             }
+            return vecs;
+        }
+
+        public static List<Stroke.StrokePoint> AddNoiseToList(List<Stroke.StrokePoint> vecs, float amt) {
+
+            for (int i = 1; i < vecs.Count - 1; i++) {
+                Vector3 a = vecs[i - 1].vec * 10;
+                Vector3 b = vecs[i + 1].vec * 10;
+                Vector3 n = vecs[i].vec + new Vector3(
+                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(a.x, b.x + Time.time)),
+                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(a.y, b.y + Time.time)),
+                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(b.z, a.z + Time.time)));
+                vecs[i] = new Stroke.StrokePoint(Vector3.Lerp(n, vecs[i].vec, amt),vecs[i].time);
+            }
+            Debug.Log(vecs.Count);
             return vecs;
         }
     }
