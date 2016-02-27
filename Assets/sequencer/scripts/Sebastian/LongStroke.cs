@@ -35,6 +35,7 @@ namespace HolojamEngine {
                     stroke.AddStrokePoint(point);
                 }
 
+
                 this.PushTrailToLine(0, trail.Count);
             }
 
@@ -108,6 +109,7 @@ namespace HolojamEngine {
                 }
 
                 this.currentPlaybackIndex++;
+
             }
 
             if (this.currentPlaybackIndex == this.trail.Count) {

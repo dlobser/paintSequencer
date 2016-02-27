@@ -1,0 +1,21 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/sequencer/scripts/Sebastian/ShortStroke.cs">
+    <Files>
+      <File FileName="Assets/sequencer/scripts/Stroke.cs" Line="192" Column="3" />
+      <File FileName="Assets/sequencer/scripts/animateBall.cs" Line="6" Column="20" />
+      <File FileName="Assets/sequencer/scripts/animate.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/StrokeAnimation.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/BulbManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateBall.cs" Line="16" Column="18" />
+      <File FileName="Assets/sequencer/scripts/switchBrush.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/Bulb.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/ShortStroke.cs" Line="31" Column="25" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/Stroke.cs" Line="34" Column="51" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

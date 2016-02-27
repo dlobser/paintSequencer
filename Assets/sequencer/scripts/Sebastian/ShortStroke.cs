@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace HolojamEngine {
     public class ShortStroke : Stroke {
 
+
         public float drawThreshold = 0.05f;
 
         private float timer = 0f;
@@ -15,17 +16,30 @@ namespace HolojamEngine {
             this.root.position = v;
             if (Vector3.Distance(this.previousDrawVector, v) > this.drawThreshold) {
                 this.trail.Add(new StrokePoint(v,timer));
-
                 if (this.trail.Count == this.trailMaxVertexCount) {
                     this.trail.RemoveAt(0);
                 }
 
+				trail = StrokeUtils.SmoothList (trail, .95f);
 
                 this.PushTrailToLine(0,trail.Count);
             }
 
             this.timer += Time.deltaTime;
         }
+
+		public void registerAnimators(GameObject g){
+
+			StrokeAnimation[] playerScripts = g.GetComponents<StrokeAnimation>();
+			if (playerScripts.Length > 0) {
+				foreach (StrokeAnimation anims in playerScripts) {
+					animations.Add (anims);
+				}
+			}
+			for (int i = 0; i < g.transform.childCount; i++) {
+				registerAnimators (g.transform.GetChild (i).gameObject);
+			}
+		}
 
         public override void FinishDraw() {
             this.hasBeenDrawn = true;
@@ -49,7 +63,10 @@ namespace HolojamEngine {
         }
 
         protected override void HandlePlay() {
+
+
             if (trail[currentPlaybackIndex].time <= timer) {
+
                 this.root.position = trail[currentPlaybackIndex].vec;
                 this.PushTrailToLine(0, currentPlaybackIndex);
                 this.currentPlaybackIndex++;
@@ -92,6 +109,7 @@ namespace HolojamEngine {
 
         protected override void OnStart() {
             this.PlayAudio();
+			registerAnimators (this.gameObject);
             
             foreach(StrokeAnimation a in animations) {
                 a.OnStart();

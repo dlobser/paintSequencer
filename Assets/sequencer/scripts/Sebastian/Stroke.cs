@@ -28,6 +28,7 @@ namespace HolojamEngine {
                 this.time = time;
                 this.subStroke = s;
             }
+
         }
 
 
@@ -181,6 +182,7 @@ namespace HolojamEngine {
             line.SetWidth(this.strokeWidth, this.strokeWidth);
         }
 
+	
         protected virtual void Reset() {
             this.strokeWidth = GlobalValuesAndSettings.Instance.STROKE_START_WIDTH;
             this.currentPlaybackIndex = 0;
@@ -248,33 +250,41 @@ namespace HolojamEngine {
         public static List<Vector3> AddNoiseToList(List<Vector3> vecs, float amt)
         {
             
-            for (int i = 1; i < vecs.Count - 1; i++)
-            {
-                Vector3 a = vecs[i - 1] * 10;
-                Vector3 b = vecs[i + 1] * 10;
-                Vector3 n = vecs[i] + new Vector3(
-                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(a.x, b.x + Time.time)),
-                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(a.y, b.y + Time.time)),
-                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(b.z, a.z + Time.time)));
-                vecs[i] = Vector3.Lerp(n, vecs[i], amt);
-            }
-            return vecs;
+			for (int i = 1; i < vecs.Count - 1; i++) {
+				Vector3 a = vecs [i - 1]*3;
+				Vector3 b = vecs [i + 1]*3;
+				Vector3 n = vecs[i] + new Vector3 (
+					(Mathf.PI*Mathf.PerlinNoise (a.x, b.x+Time.time)),
+					(Mathf.PI*Mathf.PerlinNoise (a.y, b.y+Time.time)),
+					(Mathf.PI*Mathf.PerlinNoise (b.z, a.z+Time.time)));
+				vecs [i] =  Vector3.Lerp( n , vecs[i], amt);
+			}
+			return vecs;
         }
 
         public static List<Stroke.StrokePoint> AddNoiseToList(List<Stroke.StrokePoint> vecs, float amt) {
 
-            for (int i = 1; i < vecs.Count - 1; i++) {
-                Vector3 a = vecs[i - 1].vec * 10;
-                Vector3 b = vecs[i + 1].vec * 10;
-                Vector3 n = vecs[i].vec + new Vector3(
-                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(a.x, b.x + Time.time)),
-                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(a.y, b.y + Time.time)),
-                    Mathf.Cos(Mathf.PI * Mathf.PerlinNoise(b.z, a.z + Time.time)));
-                vecs[i] = new Stroke.StrokePoint(Vector3.Lerp(n, vecs[i].vec, amt),vecs[i].time);
-            }
-            Debug.Log(vecs.Count);
-            return vecs;
+			for (int i = 1; i < vecs.Count - 1; i++) {
+				Vector3 a = vecs [i - 1].vec *3;
+				Vector3 b = vecs [i + 1].vec *3;
+				Vector3 n = vecs[i].vec + new Vector3 (
+					(Mathf.PI*Mathf.PerlinNoise (a.x, b.x+Time.time)),
+					(Mathf.PI*Mathf.PerlinNoise (a.y, b.y+Time.time)),
+					(Mathf.PI*Mathf.PerlinNoise (b.z, a.z+Time.time)));
+				vecs[i] = new Stroke.StrokePoint(Vector3.Lerp(n, vecs[i].vec, amt),vecs[i].time);
+			}
+			return vecs;
         }
+
+		public static List<Stroke.StrokePoint> SmoothList(List<Stroke.StrokePoint> vecs, float amt) {
+			for (int i = 1; i < vecs.Count-1; i++) {
+				Vector3 a = vecs [i - 1].vec;
+				Vector3 b = vecs [i + 1].vec;
+				vecs[i] = new Stroke.StrokePoint( Vector3.Lerp( (a+b)/2 , vecs[i].vec, amt),vecs[i].time);
+//				vecs [i].vec = c;
+			}
+			return vecs;
+		}
     }
 }
 
