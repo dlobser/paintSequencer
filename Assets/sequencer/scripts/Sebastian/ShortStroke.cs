@@ -6,10 +6,12 @@ using System.Collections.Generic;
 namespace HolojamEngine {
     public class ShortStroke : Stroke {
 
+        //fix timer
 
         public float drawThreshold = 0.05f;
 
         private float timer = 0f;
+        private float timeOffset = 0f;
         private Vector3 previousDrawVector = Vector3.zero;
 
         public override void Draw(Vector3 v) {
@@ -43,6 +45,7 @@ namespace HolojamEngine {
 
         public override void FinishDraw() {
             this.hasBeenDrawn = true;
+            this.timeOffset = trail[0].time;
             this.SwitchToState(StrokeState.FINISH);
         }
 
@@ -65,8 +68,7 @@ namespace HolojamEngine {
         protected override void HandlePlay() {
 
 
-            if (trail[currentPlaybackIndex].time <= timer) {
-
+            if (trail[currentPlaybackIndex].time <= timer + timeOffset) {
                 this.root.position = trail[currentPlaybackIndex].vec;
                 this.PushTrailToLine(0, currentPlaybackIndex);
                 this.currentPlaybackIndex++;

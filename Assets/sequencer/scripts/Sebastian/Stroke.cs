@@ -175,7 +175,7 @@ namespace HolojamEngine {
                 this.FlagForDeath();
         }
 
-        protected void PushTrailToLine(int start, int finish) {
+        protected virtual void PushTrailToLine(int start, int finish) {
             Vector3[] arr = StrokeUtils.ListToArray(trail,start, finish);
             line.SetVertexCount(arr.Length);
             line.SetPositions(arr);
@@ -281,10 +281,19 @@ namespace HolojamEngine {
 				Vector3 a = vecs [i - 1].vec;
 				Vector3 b = vecs [i + 1].vec;
 				vecs[i] = new Stroke.StrokePoint( Vector3.Lerp( (a+b)/2 , vecs[i].vec, amt),vecs[i].time);
-//				vecs [i].vec = c;
 			}
 			return vecs;
 		}
+
+        public static Vector3[] ArrayFromTrailAndList(List<Stroke.StrokePoint> vecs, List<Vector3> offs, float amt) {
+            Vector3[] arr = new Vector3[vecs.Count];
+
+            for (int i = 0; i < vecs.Count; i++) {
+                arr[i] = Vector3.Lerp(vecs[i].vec, offs[i], amt);
+            }
+
+            return arr;
+        }
     }
 }
 
