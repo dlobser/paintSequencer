@@ -10,6 +10,8 @@ namespace HolojamEngine {
 
         public float drawThreshold = 0.05f;
 
+
+
         private float timer = 0f;
         private float timeOffset = 0f;
         private Vector3 previousDrawVector = Vector3.zero;
@@ -64,23 +66,35 @@ namespace HolojamEngine {
         protected override void HandleStart() {
             //throw new NotImplementedException();
         }
+//		public override void SelfPlay() {
+//			//throw new NotImplementedException();
+//		}
 
         protected override void HandlePlay() {
 
 
-            if (trail[currentPlaybackIndex].time <= timer + timeOffset) {
+						if (currentPlaybackIndex < trail.Count-1) {
+							while (trail [currentPlaybackIndex].time < timer + timeOffset && currentPlaybackIndex < trail.Count-1) {
+			this.currentPlaybackIndex++;
+							}
+						}
+			if (this.currentPlaybackIndex > trail.Count - 1)
+				this.currentPlaybackIndex = trail.Count - 1;
+			
+
+//            if (trail[currentPlaybackIndex].time <= timer + timeOffset) {
                 this.root.position = trail[currentPlaybackIndex].vec;
                 this.PushTrailToLine(0, currentPlaybackIndex);
-                this.currentPlaybackIndex++;
-            }
+//                this.currentPlaybackIndex++;
+//            }
 
             float v = currentPlaybackIndex / (float)(trail.Count-1);
             foreach (StrokeAnimation a in animations) {
                 a.HandlePlay(v);
             }
 
-            if (this.currentPlaybackIndex == trail.Count)
-                this.SwitchToState(StrokeState.FINISH);
+			if (this.currentPlaybackIndex >= trail.Count-1)
+				this.SwitchToState(StrokeState.FINISH);
 
             timer += Time.deltaTime;
         }
@@ -111,6 +125,8 @@ namespace HolojamEngine {
 
         protected override void OnStart() {
             this.PlayAudio();
+
+
 			registerAnimators (this.gameObject);
             
             foreach(StrokeAnimation a in animations) {

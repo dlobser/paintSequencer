@@ -13,6 +13,7 @@ namespace HolojamEngine {
         private List<Stroke> subStrokes = new List<Stroke>();
         private bool hasSubStrokesFinished = false;
 
+		private bool firstStroke = false;
 
         public override void Draw(Vector3 v) {
             this.root.position = v;
@@ -22,9 +23,10 @@ namespace HolojamEngine {
 
                 Stroke s = null;
 
-                if (this.timer > this.strokeLength) {
+                if (!firstStroke || this.timer > this.strokeLength) {
                     s = this.MakeSubStroke();
                     timer = 0f;
+					firstStroke = true;
                 }
 
                 StrokePoint point = new StrokePoint(v, timer, s);
@@ -32,7 +34,8 @@ namespace HolojamEngine {
                 this.trail.Add(point);
                 
                 foreach (Stroke stroke in subStrokes) {
-                    stroke.AddStrokePoint(point);
+					if (stroke != s)
+                    	stroke.AddStrokePoint(point);
                 }
 
 
@@ -94,6 +97,9 @@ namespace HolojamEngine {
         protected override void HandleIdle() {
         }
 
+//		public override void SelfPlay() {
+//		}
+
         protected override void HandleStart() {
         }
 
@@ -140,7 +146,7 @@ namespace HolojamEngine {
 
         private Stroke MakeSubStroke() {
             Stroke stroke = GameObject.Instantiate<Stroke>(subStrokePrefab);
-            stroke.SetTrail(StrokeUtils.AddNoiseToList(this.trail.GetRange(0, trail.Count), 0.9f));
+            stroke.SetTrail(trail);
             stroke.Play();
             subStrokes.Add(stroke);
             return stroke;

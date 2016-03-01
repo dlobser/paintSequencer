@@ -18,7 +18,8 @@ namespace HolojamEngine {
 			transform.localScale = new Vector3 (sc, sc, sc);	
 		}
 		public override void HandleFinish(float t){
-			float sc = Mathf.Max(.001f, transform.GetChild (0).localScale.x);
+			Debug.Log ("poooo");
+			float sc = Mathf.Max(.001f, transform.localScale.x);
 			sc *= .95f;
 			transform.localScale = new Vector3 (sc, sc, sc);	
 		}

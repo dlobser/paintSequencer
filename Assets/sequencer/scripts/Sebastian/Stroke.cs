@@ -53,15 +53,17 @@ namespace HolojamEngine {
         protected LineRenderer line;
         protected AudioSource audio;
         protected Transform root;
-        protected int trailMaxVertexCount = 100;
+        public int trailMaxVertexCount = 100;
+		public int lineMaxVertexCount = 100;
         protected int currentPlaybackIndex = 0;
         protected float age;
-        protected float strokeWidth = 0.1f;
+        public float strokeWidth = 0.1f;
         protected bool isFlaggedForDeath = false;
         protected bool hasBeenDrawn = false;
         protected bool isPlaying = false;
         private StrokeState state = StrokeState.IDLE;
-        protected bool canRestartFromFinish = true;
+        public bool canRestartFromFinish = true;
+//		public bool selfPlaying = true;
 
         ////////////////////////////////////////
         //inherited functions
@@ -112,13 +114,13 @@ namespace HolojamEngine {
             return this.state;
         }
 
-        public void SetTrail(List<StrokePoint> newTrail)
+		public virtual void SetTrail(List<StrokePoint> newTrail)
         {
             this.hasBeenDrawn = true;
             this.trail = newTrail;
         }
 
-        public void AddStrokePoint(StrokePoint newPoint) {
+        public virtual void AddStrokePoint(StrokePoint newPoint) {
             this.trail.Add(newPoint);
         }
 
@@ -134,6 +136,7 @@ namespace HolojamEngine {
         }
 
         protected void HandleStateMachine() {
+//			print (this.state);
             switch(this.state) {
                 case StrokeState.IDLE:
                     this.HandleIdle();
@@ -194,6 +197,8 @@ namespace HolojamEngine {
         public abstract void Draw(Vector3 v);
         public abstract void FinishDraw(); //TODO: RENAME THIS
         //public abstract void Kill();
+//		public abstract void SelfPlay();
+
 
         protected abstract void OnIdle();
         protected abstract void OnStart();
@@ -212,17 +217,20 @@ namespace HolojamEngine {
     public class StrokeUtils {
 
         public static Vector3[] ListToArray(List<Vector3> list, int start, int finish) {
+//			Debug.Log (start + "," + finish+","+list.Count);
             Vector3[] arr = new Vector3[finish - start];
+			int q = -1;
             for (int i = start; i < finish; i++) {
-                arr[i] = list[i];
+                arr[++q] = list[i];
             }
             return arr;
         }
 
         public static Vector3[] ListToArray(List<Stroke.StrokePoint> list, int start, int finish) {
             Vector3[] arr = new Vector3[finish - start];
+			int q = -1;
             for (int i = start; i < finish; i++) {
-                arr[i] = list[i].vec;
+                arr[++q] = list[i].vec;
             }
             return arr;
         }
@@ -276,6 +284,22 @@ namespace HolojamEngine {
 			return vecs;
         }
 
+		public static Vector3 AddNoiseToVec(Vector3 vec){
+			return vec + new Vector3 (
+				(.5f-Mathf.PerlinNoise (vec.x, vec.x+Time.time)),
+				(.5f-Mathf.PerlinNoise (vec.y, vec.y+Time.time)),
+				(.5f-Mathf.PerlinNoise (vec.z, vec.z+Time.time)));
+			
+		}
+
+		public static Vector3 AddNoiseToVec(Vector3 vec, float offset){
+			return vec + new Vector3 (
+				(.5f-Mathf.PerlinNoise (vec.x, vec.x+Time.time+offset)),
+				(.5f-Mathf.PerlinNoise (vec.y, vec.y+Time.time+offset)),
+				(.5f-Mathf.PerlinNoise (vec.z, vec.z+Time.time+offset)));
+
+		}
+
 		public static List<Stroke.StrokePoint> SmoothList(List<Stroke.StrokePoint> vecs, float amt) {
 			for (int i = 1; i < vecs.Count-1; i++) {
 				Vector3 a = vecs [i - 1].vec;
@@ -283,6 +307,14 @@ namespace HolojamEngine {
 				vecs[i] = new Stroke.StrokePoint( Vector3.Lerp( (a+b)/2 , vecs[i].vec, amt),vecs[i].time);
 			}
 			return vecs;
+		}
+
+		public static Vector3[] LerpArrays(Vector3[] a, Vector3[] b, List<float> c){
+			Vector3[] d = new Vector3[a.Length];
+			for(int i = 0 ; i < a.Length ; i++){
+				d[i] = Vector3.LerpUnclamped(a[i],b[i],c[i]);
+			}
+			return d;
 		}
 
         public static Vector3[] ArrayFromTrailAndList(List<Stroke.StrokePoint> vecs, List<Vector3> offs, float amt) {
