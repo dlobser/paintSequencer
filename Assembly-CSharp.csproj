@@ -101,11 +101,13 @@
      <Compile Include="Assets\sequencer\scripts\beatManagerVive.cs" />
      <Compile Include="Assets\sequencer\scripts\copyTransform.cs" />
      <Compile Include="Assets\sequencer\scripts\longStroke2.cs" />
+     <Compile Include="Assets\sequencer\scripts\lookAtCam.cs" />
      <Compile Include="Assets\sequencer\scripts\old\LineUnity.cs" />
      <Compile Include="Assets\sequencer\scripts\old\StrokeOld.cs" />
      <Compile Include="Assets\sequencer\scripts\old\beatManagerOld.cs" />
      <Compile Include="Assets\sequencer\scripts\old\longStrokeOld.cs" />
      <Compile Include="Assets\sequencer\scripts\old\makeLine.cs" />
+     <Compile Include="Assets\sequencer\scripts\ringStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\strokeUtils.cs" />
      <Compile Include="Assets\sequencer\scripts\switchBrush.cs" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Fade.shader" />
@@ -113,6 +115,7 @@
      <None Include="Assets\SteamVR\Resources\SteamVR_HiddenArea.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Overlay.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Blit.shader" />
+     <None Include="Assets\sequencer\Materials\ring.shader" />
      <None Include="Assets\SteamVR\readme.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
