@@ -1,23 +1,26 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/sequencer/scripts/Sebastian/nStroke.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/sequencer/scripts/ringStroke.cs">
     <Files>
       <File FileName="Assets/sequencer/scripts/Stroke.cs" Line="1" Column="1" />
       <File FileName="Assets/sequencer/scripts/animateBall.cs" Line="1" Column="1" />
       <File FileName="Assets/sequencer/scripts/animate.cs" Line="1" Column="1" />
       <File FileName="Assets/sequencer/scripts/Sebastian/StrokeAnimation.cs" Line="1" Column="1" />
       <File FileName="Assets/sequencer/scripts/Sebastian/BulbManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateBall.cs" Line="21" Column="21" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateBall.cs" Line="1" Column="1" />
       <File FileName="Assets/sequencer/scripts/switchBrush.cs" Line="1" Column="1" />
       <File FileName="Assets/sequencer/scripts/Sebastian/Bulb.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/ShortStroke.cs" Line="12" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/Stroke.cs" Line="220" Column="24" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/nStroke.cs" Line="60" Column="19" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateAudioFadeInOut.cs" Line="13" Column="4" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/LongStroke.cs" Line="142" Column="16" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/ShortStroke.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/Stroke.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/nStroke.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateAudioFadeInOut.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/LongStroke.cs" Line="1" Column="1" />
       <File FileName="Assets/sequencer/scripts/longStroke2.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/LongStroke2.cs" Line="109" Column="46" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/LongStroke2.cs" Line="1" Column="1" />
       <File FileName="Assets/sequencer/scripts/ShortStroke.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateTrailFade.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/LongStroke3.cs" Line="1" Column="1" />
+      <File FileName="Assets/sequencer/scripts/ringStroke.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
