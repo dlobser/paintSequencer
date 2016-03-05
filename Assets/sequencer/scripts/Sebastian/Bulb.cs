@@ -16,11 +16,15 @@ namespace HolojamEngine {
 
         public float pitch = 1f;
         public Stroke strokePrefab;
+		public GameObject display;
+		public float minScale = 1;
+		public float maxScale = 2;
+		public GameObject Indicator;
 
         ////////////////////////////////////////
         //protected/private collections & vars
         ////////////////////////////////////////
-        private List<Stroke> strokes = new List<Stroke>();
+        public List<Stroke> strokes = new List<Stroke>();
 
         private Stroke activeStroke;
 
@@ -30,7 +34,8 @@ namespace HolojamEngine {
 
         //occurs before all gameobject initialization. ( equivalent to constructor )
         void Awake() {
-
+			if (display == null)
+				display = this.gameObject;
         }
 
         // Use this for initialization
@@ -40,9 +45,15 @@ namespace HolojamEngine {
 
         // Update is called once per frame
         void Update() {
-            if (this.transform.localScale.x > GlobalValuesAndSettings.Instance.BULB_MIN_SCALE) {
-                this.transform.localScale = Vector3.Scale(this.transform.localScale, Vector3.one * 0.95f);
+            if (display.transform.localScale.x > minScale) {
+				display.transform.localScale = Vector3.one*display.transform.localScale.x*.95f;
+
+//                display.transform.localScale = Vector3.Scale(this.transform.localScale, Vector3.one * 0.95f);
             }
+			if (Indicator.transform.localScale.x > 0) {
+				Indicator.transform.localScale = Vector3.one*Indicator.transform.localScale.x*.95f;
+			}
+
         }
 
         ////////////////////////////////////////
@@ -53,7 +64,7 @@ namespace HolojamEngine {
             foreach (Stroke stroke in this.strokes) {
                 stroke.Play();
             }
-            this.transform.localScale = Vector3.one * GlobalValuesAndSettings.Instance.BULB_MAX_SCALE;
+            display.transform.localScale = Vector3.one * maxScale;
         }
 
         public void DrawStroke(Vector3 v) {

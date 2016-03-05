@@ -27,8 +27,9 @@ namespace HolojamEngine {
         ////////////////////////////////////////
         private Bulb activeBulb;
         private int currentStrokeIndex;
-        private float timer = 0f;
-        private int bulbCounter = 0;
+        public float timer = 0f;
+        public int bulbCounter = 0;
+
         ////////////////////////////////////////
         //inherited functions
         ////////////////////////////////////////
@@ -42,10 +43,13 @@ namespace HolojamEngine {
         void Start() {
             for (int i = 0; i < amount; i++) {
                 Bulb nb = GameObject.Instantiate<Bulb>(bulbPrefab);
-                nb.transform.position = new Vector3(
-                Mathf.Sin(((float)i / (float)amount) * Mathf.PI * 2) * radius,
-                height,
-                Mathf.Cos(((float)i / (float)amount) * Mathf.PI * 2) * radius);
+				if (i % 4 == 0)
+					nb.minScale = nb.minScale * 3;
+				nb.transform.position = new Vector3 ((1+i)*radius, 0, 0);
+//                nb.transform.position = new Vector3(
+//                Mathf.Sin(((float)i / (float)amount) * Mathf.PI * 2) * radius,
+//                height,
+//                Mathf.Cos(((float)i / (float)amount) * Mathf.PI * 2) * radius);
                 bulbs.Add(nb);
             }
 
@@ -59,14 +63,21 @@ namespace HolojamEngine {
             {
                 this.currentStrokeIndex = (currentStrokeIndex + 1 == strokePrefabs.Count ? 0 : currentStrokeIndex + 1);
             }
+			Vector3 hit = this.HitPoint();
+			this.FindClosestBulb (hit).Indicator.transform.localScale = Vector3.one *.5f;
 
             //START/DRAW STROKE
             if (Input.GetMouseButton(0)) {
-                Vector3 hit = this.HitPoint();
+//                Vector3 hit = this.HitPoint();
                 if (activeBulb == null) {
-                    activeBulb = this.FindClosestBulb(hit);
-                    activeBulb.strokePrefab = strokePrefabs[currentStrokeIndex];
-                    activeBulb.DrawStroke(hit);
+					//JUST FOR SCREENSPACE 
+					if (hit.x * radius > 0) {
+						print (hit.x);
+						activeBulb = this.FindClosestBulb (hit);
+						activeBulb.strokePrefab = strokePrefabs [currentStrokeIndex];
+						activeBulb.DrawStroke (hit);
+						activeBulb.display.transform.localScale = Vector3.one * 3;
+					}
                 } else {
                     activeBulb.DrawStroke(hit);
                 }
@@ -92,7 +103,7 @@ namespace HolojamEngine {
             if (timer > bpm) {
                 timer = 0;
 
-                bulbs[bulbCounter++].Pulse();
+				bulbs[bulbCounter++].Pulse();
 
                 if (bulbCounter > bulbs.Count - 1) {
                     bulbCounter = 0;

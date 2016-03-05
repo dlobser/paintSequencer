@@ -107,6 +107,7 @@
      <Compile Include="Assets\sequencer\scripts\beatManager.cs" />
      <Compile Include="Assets\sequencer\scripts\beatManagerVive.cs" />
      <Compile Include="Assets\sequencer\scripts\copyTransform.cs" />
+     <Compile Include="Assets\sequencer\scripts\growRing.cs" />
      <Compile Include="Assets\sequencer\scripts\longStroke2.cs" />
      <Compile Include="Assets\sequencer\scripts\lookAtCam.cs" />
      <Compile Include="Assets\sequencer\scripts\old\LineUnity.cs" />
@@ -117,6 +118,7 @@
      <Compile Include="Assets\sequencer\scripts\ringStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\strokeUtils.cs" />
      <Compile Include="Assets\sequencer\scripts\switchBrush.cs" />
+     <None Include="Assets\sequencer\Materials\ring3.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Fade.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_BlitFlip.shader" />
      <None Include="Assets\sequencer\Materials\ring2.shader" />
