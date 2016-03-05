@@ -74,9 +74,15 @@
      <Compile Include="Assets\SteamVR\Scripts\SteamVR_TrackedObject.cs" />
      <Compile Include="Assets\SteamVR\Scripts\SteamVR_Utils.cs" />
      <Compile Include="Assets\sequencer\scripts\Bulb.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateAnimatedBurst.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateAudioFadeInOut.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateBall.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateChildBall.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\AnimatePulse.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateSpriteTrail.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateTexture.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateTrailFade.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateTrailSin.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\Bulb.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\BulbManager.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\GlobalValuesAndSettings.cs" />
@@ -87,6 +93,7 @@
      <Compile Include="Assets\sequencer\scripts\Sebastian\ShortStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\Stroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\StrokeAnimation.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\audioStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\nStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\ShortStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Singleton.cs" />
@@ -112,6 +119,7 @@
      <Compile Include="Assets\sequencer\scripts\switchBrush.cs" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Fade.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_BlitFlip.shader" />
+     <None Include="Assets\sequencer\Materials\ring2.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_HiddenArea.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Overlay.shader" />
      <None Include="Assets\SteamVR\Resources\SteamVR_Blit.shader" />

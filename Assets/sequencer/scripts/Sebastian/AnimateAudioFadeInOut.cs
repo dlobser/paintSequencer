@@ -28,7 +28,7 @@ namespace HolojamEngine {
 	
 		}
 		public override void HandleFinish(float t){
-//			if (aud.volume > 0)
+			if (aud.volume > 0)
 				aud.volume  = 1-t;
 		}
     }

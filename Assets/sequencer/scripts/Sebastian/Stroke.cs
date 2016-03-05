@@ -286,17 +286,25 @@ namespace HolojamEngine {
 
 		public static Vector3 AddNoiseToVec(Vector3 vec){
 			return vec + new Vector3 (
-				(.5f-Mathf.PerlinNoise (vec.x, vec.x+Time.time)),
-				(.5f-Mathf.PerlinNoise (vec.y, vec.y+Time.time)),
-				(.5f-Mathf.PerlinNoise (vec.z, vec.z+Time.time)));
+				(.5f-Mathf.PerlinNoise (vec.x, vec.y+Time.time)),
+				(.5f-Mathf.PerlinNoise (vec.y, vec.z+Time.time)),
+				(.5f-Mathf.PerlinNoise (vec.x, vec.z+Time.time)));
 			
 		}
 
 		public static Vector3 AddNoiseToVec(Vector3 vec, float offset){
 			return vec + new Vector3 (
-				(.5f-Mathf.PerlinNoise (vec.x, vec.x+Time.time+offset)),
-				(.5f-Mathf.PerlinNoise (vec.y, vec.y+Time.time+offset)),
-				(.5f-Mathf.PerlinNoise (vec.z, vec.z+Time.time+offset)));
+				(.5f-Mathf.PerlinNoise (vec.x, vec.y+Time.time+offset)),
+				(.5f-Mathf.PerlinNoise (vec.y, vec.z+Time.time+offset)),
+				(.5f-Mathf.PerlinNoise (vec.x, vec.z+Time.time+offset)));
+
+		}
+
+		public static Vector3 AddNoiseToVec(Vector3 vec, float speed, float offset, float mult){
+			return vec + new Vector3 (
+				mult*(.5f-Mathf.PerlinNoise (vec.x, vec.y + speed * Time.time + offset)),
+				mult*(.5f-Mathf.PerlinNoise (vec.y, vec.z + speed * Time.time + offset)),
+				mult*(.5f-Mathf.PerlinNoise (vec.x, vec.z + speed * Time.time + offset)));
 
 		}
 

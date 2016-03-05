@@ -17,6 +17,9 @@ namespace HolojamEngine {
 
 		private int strokeCount = 0;
 
+		public float fadeSpeed = 1;
+		private float endTimer = 0f;
+
 		public int numStrokes = 5;
 
 		public override void Draw(Vector3 v) {
@@ -40,14 +43,30 @@ namespace HolojamEngine {
 
 				foreach (Stroke stroke in subStrokes) {
 					off += .335f;
-					Vector3 v2 = StrokeUtils.AddNoiseToVec (v,off);
+					Vector3 v2 = StrokeUtils.AddNoiseToVec (v,.1f,off,averageDistance()*5);
 					stroke.AddStrokePoint(new StrokePoint (v2, timer, s));
 					stroke.Play ();
 
 				}
 			}
 
+			foreach (StrokeAnimation a in animations) {
+				a.HandlePlay(1);
+			}
+
 			this.timer += Time.deltaTime;
+		}
+
+		public float averageDistance(){
+			float r = 0;
+			int q = 5;
+			if (trail.Count < 5)
+				q = trail.Count;
+			for (int i = trail.Count - 1; i > trail.Count - q; i--) {
+				r += Vector3.Distance(trail [i].vec,trail[i-1].vec);
+			}
+			r /= q;
+			return r;
 		}
 
 		public override void FinishDraw() {
@@ -65,6 +84,7 @@ namespace HolojamEngine {
 
 		protected override void Start() {
 			base.Start();
+			registerAnimators (this.gameObject);
 			this.audio.loop = true;
 			this.canRestartFromFinish = false;
 		}
@@ -114,6 +134,9 @@ namespace HolojamEngine {
 		protected override void HandlePlay() {
 
 
+			foreach (StrokeAnimation a in animations) {
+				a.HandlePlay(.5f);
+			}
 
 			if (trail[currentPlaybackIndex].time >= timer) {
 				this.root.position = trail[currentPlaybackIndex].vec;
@@ -137,13 +160,20 @@ namespace HolojamEngine {
 		}
 
 		protected override void HandleFinish() {
-			line.SetWidth(this.strokeWidth, this.strokeWidth);
+//			line.SetWidth(this.strokeWidth, this.strokeWidth);
+
+
+			foreach (StrokeAnimation a in animations) {
+				a.HandleFinish (endTimer);
+			}
+
 
 			if (!this.hasSubStrokesFinished) {
 				this.hasSubStrokesFinished = this.CheckSubStrokes();
-			} else if (this.strokeWidth > 0.01f) {
-				this.strokeWidth *= 0.97f;
+			} else if (this.endTimer < 1.0) {
+				endTimer += fadeSpeed * Time.deltaTime;
 			} else {
+				endTimer = 0;
 				this.SwitchToState(StrokeState.IDLE);
 			}
 		}
@@ -155,6 +185,19 @@ namespace HolojamEngine {
 				}
 			}
 			return true;
+		}
+
+		public void registerAnimators(GameObject g){
+
+			StrokeAnimation[] playerScripts = g.GetComponents<StrokeAnimation>();
+			if (playerScripts.Length > 0) {
+				foreach (StrokeAnimation anims in playerScripts) {
+					animations.Add (anims);
+				}
+			}
+			for (int i = 0; i < g.transform.childCount; i++) {
+				registerAnimators (g.transform.GetChild (i).gameObject);
+			}
 		}
 
 		private Stroke MakeSubStroke(StrokePoint p) {

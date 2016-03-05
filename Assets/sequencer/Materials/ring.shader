@@ -61,13 +61,13 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv);
-				float dist = distance(i.uv,float2(.5,.5))*_Size;
-				float cDist = abs((cos(max(0.0,min(1.0,dist+_Radius))*3.28)));
-				float mDist = pow(-cDist+1., _Pow);
-				// apply fog
-				UNITY_APPLY_FOG(i.fogCoord, col);
-				return f4(mDist)*col*_Color;
+//				fixed4 col = tex2D(_MainTex, i.uv);
+//				float dist = distance(i.uv,float2(.5,.5))*_Size;
+//				float cDist = abs((cos(max(0.0,min(1.0,dist+_Radius))*3.28)));
+//				float mDist = pow(-cDist+1., _Pow);
+//				// apply fog
+//				UNITY_APPLY_FOG(i.fogCoord, col);
+				return f4(1.0);//f4(mDist)*col*_Color;
 			}
 			ENDCG
 		}

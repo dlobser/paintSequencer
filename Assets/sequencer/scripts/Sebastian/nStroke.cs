@@ -51,7 +51,7 @@ namespace HolojamEngine {
 					this.nLerp.RemoveAt (0);
                 }
 					
-				trail = StrokeUtils.SmoothList (trail, .95f);
+				trail = StrokeUtils.SmoothList (trail, .9f);
 				this.PushTrailToLine(Mathf.Max(0,this.currentPlaybackIndex-lineMaxVertexCount),trail.Count);
             }
 
@@ -108,7 +108,7 @@ namespace HolojamEngine {
 		}
 
         public override void FinishDraw() {
-			print(this.trail.Count);
+//			print(this.trail.Count);
             this.hasBeenDrawn = true;
             this.timeOffset = trail[0].time;
             this.SwitchToState(StrokeState.FINISH);
