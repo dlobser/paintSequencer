@@ -15,7 +15,7 @@ namespace HolojamEngine {
 
         private float timer = 0f;
         private float timeOffset = 0f;
-		private float endTimer = 0f;
+		protected float endTimer = 0f;
 
 		public float fadeSpeed = 1;
 

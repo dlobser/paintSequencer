@@ -93,8 +93,10 @@
      <Compile Include="Assets\sequencer\scripts\Sebastian\ShortStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\Stroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\StrokeAnimation.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\StrokeSpring.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\audioStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\nStroke.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\spring.cs" />
      <Compile Include="Assets\sequencer\scripts\ShortStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Singleton.cs" />
      <Compile Include="Assets\sequencer\scripts\Stroke.cs" />
