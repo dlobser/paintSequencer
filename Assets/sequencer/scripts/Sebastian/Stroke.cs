@@ -75,7 +75,7 @@ namespace HolojamEngine {
             this.line = this.GetComponent<LineRenderer>();
             this.audio = this.GetComponent<AudioSource>();
             this.root = this.transform;
-            trailMaxVertexCount = GlobalValuesAndSettings.Instance.STROKE_MAX_VERTEX_COUNT;
+//            trailMaxVertexCount = GlobalValuesAndSettings.Instance.STROKE_MAX_VERTEX_COUNT;
             trail = new List<StrokePoint>(trailMaxVertexCount);
         }
 

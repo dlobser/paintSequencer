@@ -7,6 +7,7 @@ namespace HolojamEngine {
 		
 		public float speed = 1;
 		AudioSource aud;
+		public float maxVolume = 1;
 
 		void Awake(){
 			aud = this.gameObject.GetComponent<AudioSource>();
@@ -23,13 +24,13 @@ namespace HolojamEngine {
 		public override void OnFinish(){
 		}
 		public override void HandlePlay(float t){
-			if (aud.volume < 1)
+			if (aud.volume < maxVolume)
 				aud.volume += speed*Time.deltaTime;
 	
 		}
 		public override void HandleFinish(float t){
 			if (aud.volume > 0)
-				aud.volume  = 1-t;
+				aud.volume  = maxVolume*(1-t);
 		}
     }
 }
