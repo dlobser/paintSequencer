@@ -91,6 +91,7 @@
      <Compile Include="Assets\sequencer\scripts\Sebastian\LongStroke2.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\LongStroke3.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\NamingConventions.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\ParticleExplosion.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\ShortStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\Stroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\StrokeAnimation.cs" />

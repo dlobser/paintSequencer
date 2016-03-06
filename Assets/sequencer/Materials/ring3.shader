@@ -65,7 +65,7 @@
 				float dist = distance(i.uv,float2(.5,.5))*_Size;
 				float cDist = abs((cos(min(1.0,dist+_Radius)*3.28)));
 				float mDist = pow(-cDist+1., _Pow);
-				float sDist = sin(mDist*30.)*.1;
+				float sDist = sin(_Time.z*10.-mDist*30.)*.1;
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, col);
 				return (f4(mDist+sDist)*col*_Color)*_Color.a;

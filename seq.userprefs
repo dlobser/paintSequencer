@@ -1,19 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/sequencer/scripts/Sebastian/AnimateAnimatedBurst.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/sequencer/Materials/ring3.shader">
     <Files>
-      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateSpriteTrail.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateBall.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/StrokeAnimation.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/nStroke.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/Materials/ring.shader" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/Materials/ring2.shader" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/AnimatePulse.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/ringStroke.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateChildBall.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/Stroke.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/LongStroke3.cs" Line="1" Column="1" />
-      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateAnimatedBurst.cs" Line="22" Column="19" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/nStroke.cs" Line="41" Column="49" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/spring.cs" Line="42" Column="3" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/Stroke.cs" Line="163" Column="34" />
+      <File FileName="Assets/sequencer/scripts/growRing.cs" Line="28" Column="52" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/BulbManager.cs" Line="29" Column="15" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/AnimatePulse.cs" Line="35" Column="57" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateTrailFade.cs" Line="27" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateTrailOff.cs" Line="25" Column="4" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/AnimateChildBall.cs" Line="5" Column="11" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/changeBrushWithKeyboard.cs" Line="32" Column="62" />
+      <File FileName="Assets/sequencer/scripts/ringStroke.cs" Line="45" Column="1" />
+      <File FileName="Assets/sequencer/scripts/Sebastian/ParticleExplosion.cs" Line="18" Column="1" />
+      <File FileName="Assets/sequencer/Materials/ring3.shader" Line="68" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

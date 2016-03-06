@@ -25,7 +25,7 @@ namespace HolojamEngine {
 		void Update () {
 			float scale = Mathf.Lerp ((float)bm.bulbCounter, (float)bm.bulbCounter + 1, map (bm.timer, 0, bm.bpm, 0, 1));
 			mat.SetFloat ("_Radius", map(scale,0,(float)bm.amount,.5f,-.5f));
-			mat.SetColor("_Color",col*new Color(1,1,1, (Mathf.Cos( map(scale,0,(float)bm.amount,0,6.24f))*-1+1)*.2f ));
+			mat.SetColor("_Color",col*new Color(1,1,1, (.5f-Mathf.Cos( map(scale,0,(float)bm.amount,0,3.24f))*-1+1)*.2f ));
 //			print (map(scale,0,(float)bm.amount,.5f,-.5f));
 		}
 
