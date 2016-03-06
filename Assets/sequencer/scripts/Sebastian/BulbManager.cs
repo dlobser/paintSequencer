@@ -26,7 +26,7 @@ namespace HolojamEngine {
         //protected/private collections & vars
         ////////////////////////////////////////
         private Bulb activeBulb;
-        private int currentStrokeIndex;
+        public int currentStrokeIndex;
         public float timer = 0f;
         public int bulbCounter = 0;
 
@@ -72,7 +72,7 @@ namespace HolojamEngine {
                 if (activeBulb == null) {
 					//JUST FOR SCREENSPACE 
 					if (hit.x * radius > 0) {
-						print (hit.x);
+//						print (hit.x);
 						activeBulb = this.FindClosestBulb (hit);
 						activeBulb.strokePrefab = strokePrefabs [currentStrokeIndex];
 						activeBulb.DrawStroke (hit);

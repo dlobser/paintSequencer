@@ -8,12 +8,12 @@ namespace HolojamEngine {
 		public float mass = .5f;
 		public float damp =.1f;
 		public Vector3 Position = Vector3.zero;
-		public Vector3 Velocity = Vector3.one;
-		public Vector3 Force = Vector3.one;
+		public Vector3 Velocity = Vector3.zero;
+		public Vector3 Force = Vector3.zero;
+		private bool ReadyForExplosion = false;
 
 
-
-
+		public Vector3 center = Vector3.zero;
 		public float maxMass=.15f;
 		public float minMass=.075f;
 
@@ -24,6 +24,7 @@ namespace HolojamEngine {
 		float[] az;
 
 		void Start(){
+			registerAnimators (this.gameObject);
 			ax = new float[avgAmount];
 			ay = new float[avgAmount];
 			az = new float[avgAmount];
@@ -34,46 +35,104 @@ namespace HolojamEngine {
 			lerpTrail ();
 			this.PushTrailToLine(Mathf.Max(0,currentPlaybackIndex-lineMaxVertexCount), currentPlaybackIndex);
 
-			foreach (StrokeAnimation a in animations) {
-				endTimer += fadeSpeed * Time.deltaTime;
-				a.HandleFinish (endTimer);
-			}
+
 
 			UpdateSpring ();
-
-			if (Force.magnitude < .001f) {
-				endTimer = 0;
-				this.SwitchToState(StrokeState.IDLE);
-
+//			AddStrokePoint (new StrokePoint (this.root.position, timer));
+//			print(Force.magnitude);
+			if (Force.magnitude < .1f || ReadyForExplosion) {
+				ReadyForExplosion = true;
+//				print (endTimer);
+				endTimer += fadeSpeed * Time.deltaTime;
+				foreach (StrokeAnimation a in animations) {
+					a.HandleFinish (endTimer);
+				}
+				if (endTimer > 1) {
+					endTimer = 0;
+					this.SwitchToState (StrokeState.IDLE);
+					ReadyForExplosion = false;
+				}
 			}
 
 		}
 
 
+
+		public void registerAnimators(GameObject g){
+
+			StrokeAnimation[] playerScripts = g.GetComponents<StrokeAnimation>();
+			if (playerScripts.Length > 0) {
+				foreach (StrokeAnimation anims in playerScripts) {
+					animations.Add (anims);
+				}
+			}
+			for (int i = 0; i < g.transform.childCount; i++) {
+				registerAnimators (g.transform.GetChild (i).gameObject);
+			}
+		}
+
 		public override void AddStrokePoint(StrokePoint newPoint) {
-			Vector3 F = Vector3.zero;
+
+			Force = Vector3.zero;
+			Velocity = Vector3.zero;
+//			print (Velocity);
+//			Vector3 F = Vector3.zero;
 			if(trail.Count>1)
-				F = trail [trail.Count - 1].vec - trail [trail.Count - 2].vec;
+				Velocity = trail [trail.Count - 1].vec - trail [trail.Count - 2].vec;
 //			elapse (Time.deltaTime);
-			Vector3 avgForge = new Vector3 (average (ax, F.x), average (ay, F.y), average (az, F.z));
-			Force = avgForge;
+			Position = this.root.position;
+//			Vector3 avgForge = new Vector3 (average (ax, F.x), average (ay, F.y), average (az, F.z));
+//			Force = avgForge;
 			this.trail.Add(newPoint);
 			this.nTrail.Add (StrokeUtils.AddNoiseToVec(newPoint.vec));
 			this.nLerp.Add (0);
 		}
 
 		void UpdateSpring(){
-			Vector3 F = Vector3.zero - transform.position;
-			float dist = Vector3.Distance (Vector3.zero, transform.position);
-			mass = Mathf.Max (Mathf.Min(maxMass,map (dist, 0, 5, maxMass, minMass)),minMass);
-			print (transform.position);
-			Vector3 avgForge = new Vector3 (average (ax, F.x), average (ay, F.y), average (az, F.z));
-			Force = F;//avgForge;
-			transform.position = elapse (Time.deltaTime);
+
+			Vector3 F = center - this.root.transform.position;
+			Force = F;
+			this.root.transform.position = elapse (Time.deltaTime);
 		}
 
+		protected override void HandlePlay() {
+
+			this.currentPlaybackIndex++;
+
+			if (this.currentPlaybackIndex > trail.Count - 1)
+				this.currentPlaybackIndex = trail.Count - 1;
+
+			if (this.currentPlaybackIndex >= trail.Count - 1) {
+				this.SwitchToState(StrokeState.FINISH);
+				return;
+			}
+
+			this.root.position = trail[currentPlaybackIndex].vec;
+			this.PushTrailToLine(Mathf.Max(0,currentPlaybackIndex-lineMaxVertexCount), currentPlaybackIndex);
+			lerpTrail ();
+			float v = currentPlaybackIndex / (float)(trail.Count-1);
+			foreach (StrokeAnimation a in animations) {
+				a.HandlePlay(v);
+			}
+
+			Force = Vector3.zero;
+			Velocity = Vector3.zero;
+			//			print (Velocity);
+			//			Vector3 F = Vector3.zero;
+			if(trail.Count>1)
+				Velocity = trail [trail.Count - 1].vec - trail [trail.Count - 2].vec;
+			//			elapse (Time.deltaTime);
+			Position = this.root.position;
+
+
+			timer += Time.deltaTime;
+
+		}
+
+
+
 		Vector3 elapse(float elapsed){
-			print (Position);
+//			print (Position);
 			Velocity += (Force - Position) / mass * elapsed;
 			Vector3 v = (Position + Velocity) * (1 - damp * elapsed);
 //			print (v);
@@ -81,7 +140,7 @@ namespace HolojamEngine {
 			if (v.x > 0 || v.x < 0)
 				return v;
 			else
-				return Vector3.one;
+				return Vector3.zero;
 
 		}
 

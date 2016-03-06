@@ -24,7 +24,6 @@ namespace HolojamEngine {
 		public override void OnFinish(){
 		}
 		public override void HandlePlay(float t){
-			
 			if (lineCounter < lineWidth) {
 				lineCounter += growSpeed*Time.deltaTime;
 				line.SetWidth (0, lineCounter);

@@ -82,6 +82,7 @@
      <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateSpriteTrail.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateTexture.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateTrailFade.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateTrailOff.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\AnimateTrailSin.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\Bulb.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\BulbManager.cs" />
@@ -95,6 +96,7 @@
      <Compile Include="Assets\sequencer\scripts\Sebastian\StrokeAnimation.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\StrokeSpring.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\audioStroke.cs" />
+     <Compile Include="Assets\sequencer\scripts\Sebastian\changeBrushWithKeyboard.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\nStroke.cs" />
      <Compile Include="Assets\sequencer\scripts\Sebastian\spring.cs" />
      <Compile Include="Assets\sequencer\scripts\ShortStroke.cs" />

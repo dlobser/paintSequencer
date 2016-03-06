@@ -13,7 +13,7 @@ namespace HolojamEngine {
 		public List<Vector3> nTrail = new List<Vector3> ();
 		public List<float> nLerp = new List<float> ();
 
-        private float timer = 0f;
+        protected float timer = 0f;
         private float timeOffset = 0f;
 		protected float endTimer = 0f;
 
@@ -31,7 +31,6 @@ namespace HolojamEngine {
             this.root.position = v;
 
 			if (!start) {
-
 				foreach (StrokeAnimation a in animations) {
 					a.OnStart ();
 				}
