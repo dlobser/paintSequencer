@@ -45,11 +45,11 @@ namespace HolojamEngine {
                 Bulb nb = GameObject.Instantiate<Bulb>(bulbPrefab);
 				if (i % 4 == 0)
 					nb.minScale = nb.minScale * 3;
-				nb.transform.position = new Vector3 ((1+i)*radius, 0, 0);
-//                nb.transform.position = new Vector3(
-//                Mathf.Sin(((float)i / (float)amount) * Mathf.PI * 2) * radius,
-//                height,
-//                Mathf.Cos(((float)i / (float)amount) * Mathf.PI * 2) * radius);
+//				nb.transform.position = new Vector3 ((1+i)*radius, 0, 0);
+                nb.transform.position = new Vector3(
+                Mathf.Sin(((float)i / (float)amount) * Mathf.PI * 2) * radius,
+                height,
+                Mathf.Cos(((float)i / (float)amount) * Mathf.PI * 2) * radius);
                 bulbs.Add(nb);
             }
 

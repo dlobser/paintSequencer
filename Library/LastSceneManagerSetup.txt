@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/main-lobser.unity
+- path: Assets/main_Holojam.unity
   isLoaded: 1
   isActive: 1

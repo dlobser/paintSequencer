@@ -19,7 +19,7 @@ namespace HolojamEngine {
 
 		public override void OnPlay(){
 			thisBurst.GetComponent<Animator> ().SetTrigger ("play");
-			print ("play");
+//			print ("play");
 		}
 		public override void OnFinish(){}
 

@@ -16,7 +16,7 @@ namespace HolojamEngine {
 		public override void OnFinish(){
 		}
 		public override void HandlePlay(float t){
-			Debug.Log (t);
+//			Debug.Log (t);
 			float sc = Mathf.Max(.001f, (-Mathf.Cos (t * Mathf.PI * 2) + 1) * scale);
 			child.transform.localScale = new Vector3 (sc, sc, sc);	
 		}

@@ -127,6 +127,8 @@ namespace HolojamEngine {
         }
 
         protected override void HandleStart() {
+			
+
             //throw new NotImplementedException();
         }
 
@@ -179,9 +181,8 @@ namespace HolojamEngine {
 			
 
         protected override void OnIdle() {
-
             if (this.isFlaggedForDeath) {
-                Destroy(this.gameObject);
+                GameObject.Destroy(this.gameObject);
                 return;
             }
 
@@ -194,6 +195,17 @@ namespace HolojamEngine {
 
 
         protected override void OnStart() {
+
+//			if (canRestartFromFinish) {
+//				this.Reset ();
+//			}
+
+//			print (this.GetState ());
+
+			if (this.isFlaggedForDeath) {
+				GameObject.Destroy(this.gameObject);
+				return;
+			}
 			
             this.PlayAudio();
 

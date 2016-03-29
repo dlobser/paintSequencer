@@ -53,7 +53,10 @@ namespace HolojamEngine {
 			if (Indicator.transform.localScale.x > 0) {
 				Indicator.transform.localScale = Vector3.one*Indicator.transform.localScale.x*.95f;
 			}
-
+			for (int i = 0; i < this.strokes.Count; i++) {
+				if (this.strokes [i] == null)
+					this.strokes.Remove (this.strokes [i]);
+			}
         }
 
         ////////////////////////////////////////
@@ -87,10 +90,17 @@ namespace HolojamEngine {
         }
 
         public void ClearStrokes() {
+//			for (int i = 0; i < this.strokes.Count; i++) {
+//				Stroke stroke = this.strokes [0];
+//				GameObject.Destroy (stroke.gameObject);
+//				this.strokes.RemoveAt (0);
+//			}
             foreach (Stroke stroke in this.strokes) {
+//				print (stroke);
+//				GameObject.Destroy (stroke);
                 stroke.FlagForDeath();
             }
-            this.strokes.Clear();
+//            this.strokes.Clear();
             this.pitch = 1f;
         }
 

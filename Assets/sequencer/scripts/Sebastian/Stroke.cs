@@ -99,7 +99,7 @@ namespace HolojamEngine {
                 return;
                 //TO-DO: CHANGE
             }  else if (this.state.Equals(StrokeState.IDLE) || 
-                       (this.canRestartFromFinish && this.state.Equals(StrokeState.FINISH))) {
+				(this.canRestartFromFinish && this.state.Equals(StrokeState.FINISH))) {
                 this.Reset();
                 this.SwitchToState(StrokeState.START);
             } 
