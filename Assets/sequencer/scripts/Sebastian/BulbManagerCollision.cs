@@ -61,46 +61,13 @@ namespace HolojamEngine {
         // Update is called once per frame
         void Update() {
             //SWITCH STROKE PREFAB
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                this.currentStrokeIndex = (currentStrokeIndex + 1 == strokePrefabs.Count ? 0 : currentStrokeIndex + 1);
-            }
-			Vector3 hit = this.HitPoint();
-			this.FindClosestBulb (hit).Indicator.transform.localScale = Vector3.one *.5f;
-
-//            //START/DRAW STROKE
-//            if (Input.GetMouseButton(0)) {
-////                Vector3 hit = this.HitPoint();
-//                if (activeBulb == null) {
-//					//JUST FOR SCREENSPACE 
-//					if (hit.x * radius > 0) {
-////						print (hit.x);
-//						activeBulb = this.FindClosestBulb (hit);
-//						activeBulb.strokePrefab = strokePrefabs [currentStrokeIndex];
-//						activeBulb.DrawStroke (hit);
-//						activeBulb.display.transform.localScale = Vector3.one * 3;
-//					}
-//                } else {
-//                    activeBulb.DrawStroke(hit);
-//                }
-//            }
-
-//            //FINISH STROKE
-//            if (Input.GetMouseButtonUp(0)) {
-//                if (activeBulb) {
-//                    activeBulb.FinishStroke();
-//                    activeBulb = null;
-//                }
-//            }
-//
-//
-//            //DELETE
-//            if (Input.GetMouseButtonDown(1) && !activeBulb)
-//            {
-//                this.FindClosestBulb(this.HitPoint()).ClearStrokes();
-//            }
-
-
+   //         if (Input.GetKeyDown(KeyCode.S))
+   //         {
+   //             this.currentStrokeIndex = (currentStrokeIndex + 1 == strokePrefabs.Count ? 0 : currentStrokeIndex + 1);
+   //         }
+			//Vector3 hit = this.HitPoint();
+			//this.FindClosestBulb (hit).Indicator.transform.localScale = Vector3.one *.5f;
+            
             timer += Time.deltaTime;
             if (timer > bpm) {
                 timer = 0;
@@ -136,15 +103,16 @@ namespace HolojamEngine {
             return closestBulb;
         }
 
-        public Vector3 HitPoint() {
-            Vector3 vec = Vector3.zero;
-            RaycastHit vHit = new RaycastHit();
-            Ray vRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(vRay, out vHit, 1000)) {
-                vec = vHit.point;
-            }
-            return vec;
-        }
+        //public Vector3 HitPoint() {
+        //    Vector3 vec = Vector3.zero;
+        //    RaycastHit vHit = new RaycastHit();
+        //    Ray vRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    if (Physics.Raycast(vRay, out vHit, 1000)) {
+        //        vec = vHit.point;
+        //    }
+        //    Debug.Log(vec);
+        //    return vec;
+        //}
 
         ////////////////////////////////////////
         //abstract functions
